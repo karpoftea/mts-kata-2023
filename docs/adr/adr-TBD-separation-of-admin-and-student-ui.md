@@ -1,0 +1,3 @@
+- different uptime requiements
+- different style requirements
+- different lifecycles
