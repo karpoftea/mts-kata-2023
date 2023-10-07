@@ -21,6 +21,7 @@ Boundary(mvp, "MVP") {
     System_Ext(webinar, "Webinar", "Система проведения онлайн мероприятий (встреч, уроков, конференций и тп)")
     System_Ext(mtsa, "МТС Аналитика", "Система веб-, мобильной-, рекламной аналитики")
     System_Ext(mtsid, "МТС ID", "Система идентификации пользователей")
+    System_Ext(mtscloudcdn, "MTSCloud CDN", "Система дистрибьюции контента")
 }
 
 Boundary(v1, "v1") {
@@ -47,6 +48,9 @@ Rel(sys, mtsa, "Журналирует события пользователей
 Rel(sys, wasd, "Загружает видео-контент из")
 Rel(univer, sys, "Загружает учебные материали из")
 Rel(sys, mtsid, "Аутентифицирует пользователей в")
+Rel(sys, mtscloudcdn, "Загружает(cdn push) видео-контент в")
+
+Rel(mtscloudcdn, sys, "Загружает(cdn pull) медиа-контент из")
 
 @enduml
 ```
