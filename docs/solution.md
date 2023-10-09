@@ -5,4 +5,4 @@
 - [Диаграмма контекста](c4/context.md)
 - [Диаграмма контейнеров](c4/containers.md)
 - [Архитектурные решения](adr/adr.md)
-- [Презентация решения](presentation/slides.pdf)
+- [Презентация решения](presentation/slides.pptx)
