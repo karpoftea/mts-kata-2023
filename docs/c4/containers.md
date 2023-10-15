@@ -1,4 +1,9 @@
 # Диаграмма контейнеров
+
+![containers](containers.png)
+<details>
+<summary>Исходник в plantuml</summary>
+
 ```plantuml
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
@@ -70,3 +75,4 @@ Rel_U(mtscloudcdn, s3public, "Получает файлы для дистриб�
 
 @enduml
 ```
+</details>

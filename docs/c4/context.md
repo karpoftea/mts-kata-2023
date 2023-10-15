@@ -1,5 +1,9 @@
 # Диаграмма контекста
 
+![context](context.png)
+<details>
+<summary>Исходник в plantuml</summary>
+
 ```plantuml
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
@@ -50,3 +54,4 @@ Rel(sys, enaplat, "Использует кэшбек абонента МТС")
 
 @enduml
 ```
+</details>
