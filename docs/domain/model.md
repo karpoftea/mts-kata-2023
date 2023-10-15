@@ -1,11 +1,10 @@
 # Модель предметной области
-<!-- Логическая модель, содержащая бизнес-сущности предметной области, ключевые атрибуты и связи между ними. 
-Подробнее: https://confluence.mts.ru/pages/viewpage.action?pageId=375782602
-
-Используется диаграмма классов UML. Документация: https://plantuml.com/class-diagram 
--->
 
 ## Основные сущности
+
+![basic entities](basic_entities.png)
+<details>
+<summary>Исходник в plantuml</summary>
 
 ```plantuml
 @startuml
@@ -107,8 +106,14 @@ class Урок
 
 @enduml
 ```
+</details>
 
 ## Учебные материалы, классификация пользователей и курсов
+
+![ed elements](ed_elements.png)
+
+<details>
+<summary>Исходник в plantuml</summary>
 
 ```plantuml
 @startuml
@@ -178,8 +183,14 @@ class Урок
 
 @enduml
 ```
+</details>
 
 ## Материалы и комментарии к элементу программы (курсу, модулю, уроку)
+
+![ed elem content](ed_element_content.png)
+
+<details>
+<summary>Исходник в plantuml</summary>
 
 ```plantuml
 @startuml
@@ -287,3 +298,4 @@ enum МатериалВариант
 
 @enduml
 ```
+</details>
