@@ -112,8 +112,8 @@ left to right direction
 
 actor "Обучающийся" as guest
 
-rectangle learn {
-  usecase "Смотреть список курсовпо категориям" as UC21
+rectangle browse {
+  usecase "Смотреть список курсов по категориям" as UC21
   usecase "Смотреть описание курса" as UC24
   note "Здесь курс - любой элемент обр. программы (в т. ч. модуль, урок, воркшоп или конкурс)" as N21
   usecase "Записаться на курс" as UC25
@@ -141,11 +141,10 @@ actor "Обучающийся" as student
 actor "Преподаватель" as teacher
 
 rectangle workshop {
-  usecase "Участвовать в уроке" as UC38
-  note "Здесь урок - воркшоп или конкурс" as N32
+  usecase "Участвовать в воркшопе" as UC38
 }
 
-rectangle training {
+rectangle learning {
   usecase "Смотреть список курсов, куда записан" as UC31
   usecase "Учиться по курсу" as UC33
   usecase "Пройти тестирование" as UC34
@@ -230,7 +229,7 @@ rectangle course {
 }
 
 rectangle progress {
-  usecase "Отслеживать прогресс" as UC72
+  usecase "Отслеживать прогресс выполнения" as UC72
 }
 
 UC63 -> UC61 : inc. (обязательно на учебный)
@@ -256,7 +255,7 @@ left to right direction
 actor "СотрудникПоддержки" as support
 
 rectangle category {
-  usecase "Вести категории" as UC91
+  usecase "Вести категории (добавлять и пр.)" as UC91
 }
 
 support --> UC91
@@ -276,11 +275,11 @@ actor "Студент" as student
 actor "Преподаватель" as teacher
 actor "Администратор" as admin
 
-rectangle learn {
+rectangle browse {
   usecase "Смотреть список курсов по категориям" as UC21
 }
 
-rectangle training {
+rectangle learning {
   usecase "Смотреть список курсов, куда записан" as UC31
 }
 
@@ -294,7 +293,8 @@ rectangle course {
 
 rectangle navigator {
   usecase "Смотреть список курсов" as UC81
-  usecase "Искать курс по названию, описанию, категории и пр." as UC82
+  usecase "Искать курс по названию, категории и пр." as UC82
+  usecase "Перемещаться по структуре курса, по порядку уроков" as UC83
   note "Здесь курс - любой элемент обр. программы" as N81
 }
 
@@ -307,6 +307,7 @@ UC31 --|> UC81
 UC32 --|> UC81
 UC71 --|> UC81
 UC81 <. UC82 : ext.
+UC81 <. UC83 : ext.
 
 @enduml
 ```
