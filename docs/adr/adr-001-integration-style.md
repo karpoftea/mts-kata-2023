@@ -115,6 +115,10 @@ Proposed
 
 #### Диаграмма последовательности при загрузке работы (1)
 
+![uc course view](couse_learning_submit_work.png)
+<details>
+<summary>Исходник в plantuml</summary>
+
 ```plantuml
 @startuml
 
@@ -149,7 +153,13 @@ end
 @enduml
 ```
 
+</details>
+
 #### Диаграмма последовательности при проверке работы (2)
+
+![uc course view](couse_check_work.png)
+<details>
+<summary>Исходник в plantuml</summary>
 
 ```plantuml
 @startuml
@@ -194,6 +204,8 @@ end
 
 @enduml
 ```
+
+</details>
 
 ## 3. Фактор принятия решения
 
