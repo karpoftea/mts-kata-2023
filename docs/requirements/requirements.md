@@ -8,7 +8,10 @@
     - [Варианты использования (ВИ)](#варианты-использования-ви)
     - [Варианты использования при работе с аккаунтом](#варианты-использования-при-работе-с-аккаунтом)
     - [Варианты использования, возникащие при просмотре курсов](#варианты-использования-возникащие-при-просмотре-курсов)
-    - [Варианты использования, возникащие при обучении](#варианты-использования-возникащие-при-обучении)
+    - [Варианты использования, возникающие при администрировании](#варианты-использования-возникающие-при-администрировании)
+    - [Варианты использования, возникающие при отслеживании процесса учебы](#варианты-использования-возникающие-при-отслеживании-процесса-учебы)
+    - [Варианты использования при ведении справочников](#варианты-использования-при-ведении-справочников)
+    - [Варианты использования при навигации по курсам](#варианты-использования-при-навигации-по-курсам)
     - [Функциональные требования (ФТ)](#функциональные-требования-фт)
     - [Нефункциональные требования (НФТ)](#нефункциональные-требования-нфт)
     - [Ограничения (ОГ)](#ограничения-ог)
@@ -75,33 +78,34 @@
 left to right direction
 
 actor "Гость" as guest
-
 actor "Студент" as student
 actor "Преподаватель" as teacher
 actor "СотрудникПоддержки" as support
 actor "Администратор" as admin
-
-actor "Обучающийся" as guest
 
 student --|> guest
 teacher --|> guest
 support --|> guest
 admin --|> guest
 
-actor "Обучающийся" as guest
-
 usecase "Зарегистрироваться" as UC11
-usecase "Авторизоваться" as UC12
-usecase "Выйти из системы" as UC13
-usecase "Настроить аккаунт" as UC14
 
-guest -left-> UC11
+rectangle account {
+  usecase "Авторизоваться" as UC12
+  usecase "Выйти из системы" as UC13
+  usecase "Настроить аккаунт" as UC14
+  usecase "Заполнить профиль преподавателя" as UC15
+}
+
+guest -left-> UC11 : (если не зарегистрирован)
 guest --> UC12
 UC12 <. UC13 : ext.
 UC12 <. UC14 : ext.
+UC12 <. UC15 : ext. (доступно преподавателю)
 
 @enduml
 ```
+
 </details>
 
 ### Варианты использования, возникащие при просмотре курсов
@@ -115,30 +119,56 @@ UC12 <. UC14 : ext.
 
 left to right direction
 
-actor "Обучающийся" as guest
+actor "Обучающийся" as student
+actor "Преподаватель" as teacher
 
-usecase "Смотреть каталог курсов" as UC21
-usecase "Искать курс по описанию" as UC22
-usecase "Смотреть описание курса" as UC24
-note "Здесь курс - любой элемент обр. программы (в т. ч. модуль, урок, врокшоп или конкурс)" as N21
-usecase "Записаться на курс" as UC25
-usecase "Зарег-ся или авториз-ся" as UC23
+rectangle workshop {
+  usecase "Участвовать в воркшопе" as UC38
+}
 
-guest -up-> UC21
-guest --> UC22
-UC21 -> UC24 : inc.
-UC22 -> UC24 : inc.
-UC24 <. UC25 : ext. (на учебный - для студентов)
-UC24 <. UC23 : ext. (на учебный - для гостей)
+rectangle learning {
+  usecase "Смотреть список курсов, куда записан" as UC31
+  usecase "Учиться по курсу" as UC33
+  usecase "Пройти тестирование" as UC34
+  usecase "Загрузить выполненную работу" as UC35
+  usecase "Оценить курс" as UC36
+  usecase "Смотреть материалы" as UC39
+  note "Здесь курс - любой элемент обр. программы" as N31
+}
+
+rectangle review {
+  usecase "Смотреть список курсов, куда назначен" as UC32
+  usecase "Проверить и оценить работу" as UC37
+  usecase "Видеть работы для проверки" as UC40
+  usecase "Видеть студентов на курсе" as UC41
+  usecase "Определить призовое место" as UC42
+}
+
+teacher --> UC32
+student -up-> UC31
+UC31 -> UC33 : inc. (учебный курс)
+UC31 -- N31
+UC31 -> UC38 : inc.
+UC32 -> UC38 : inc. (общедоступный курс)
+UC32 -> UC40 : inc.
+UC32 <. UC41 : ext.
+UC40 -> UC37 : inc.
+UC41 -> UC37 : inc.
+UC33 <. UC34 : ext. (после всех уроков)
+UC33 <. UC35 : ext.
+UC33 <. UC36 : ext. (после всех уроков)
+UC35 -> UC37 : inc. (если не завершился срок приема)
+UC33 -> UC39 : inc.
+UC37 <. UC42 : ext. (для конкурса)
 
 @enduml
 ```
+
 </details>
 
-### Варианты использования, возникащие при обучении
+### Варианты использования, возникающие при администрировании
 
-![uc edu vars](uc_edu_vars.png)
-
+![uc access](uc_access.png)
 <details>
 <summary>Исходник в plantuml</summary>
 
@@ -147,43 +177,147 @@ UC24 <. UC23 : ext. (на учебный - для гостей)
 
 left to right direction
 
-actor "Обучающийся" as student
-actor "Преподаватель" as teacher
+actor "Администратор" as admin
 
-rectangle workshop {
-  usecase "Участвовать в уроке" as UC38
-  note "Здесь урок - воркшоп или конкурс" as N32
+rectangle access {
+  usecase "Видеть права пользователей" as UC51
+  usecase "Назначить роль пользователю" as UC52
 }
 
-rectangle training {
-  usecase "Видеть курсы, куда записан" as UC31
-  usecase "Учиться по курсу" as UC33
-  usecase "Пройти тестирование" as UC34
-  usecase "Загрузить выполненную работу" as UC35
-  usecase "Оценить курс" as UC36
-  usecase "Смотреть материалы" as UC39
-
+rectangle good {
+  usecase "Рассчитать добрые дела" as UC53
 }
 
-rectangle review {
-  usecase "Видеть курсы, куда назначен" as UC32
-  usecase "Проверить и оценить работу" as UC37
-}
-
-teacher --> UC32
-teacher --> UC37
-student -up-> UC31
-UC31 -> UC33 : inc.
-UC31 -> UC38 : inc.
-UC32 -> UC38 : inc.
-UC33 <. UC34 : ext. (после всех уроков)
-UC33 <. UC35 : ext.
-UC33 <. UC36 : ext. (после всех уроков)
-UC35 -> UC37 : inc.
-UC33 -> UC39 : inc.
+admin --> UC51 : (все, новые, по ролям)
+UC51 -> UC52 : inc.
+admin --> UC53 : (период)
 
 @enduml
 ```
+
+</details>
+
+###  Варианты использования, возникающие при отслеживании процесса учебы
+
+![uc course manage](uc_course_manage.png)
+<details>
+<summary>Исходник в plantuml</summary>
+
+```plantuml
+@startuml
+
+left to right direction
+
+actor "Администратор" as admin
+
+rectangle course {
+  usecase "Смотреть список курсов по статусу" as UC71
+  usecase "Назначить преподавателя" as UC61
+  usecase "Назначить категорию" as UC62
+  usecase "Добавить черновик \ редактировать курс" as UC63
+  usecase "Загрузить учебный материал" as UC64
+  usecase "Указать время проведения \ сдачи" as UC65
+  usecase "Открыть \ закрыть курс" as UC66
+  usecase "Определить доступность" as UC67
+  note "Здесь курс - любой элемент обр. программы" as N61
+}
+
+rectangle progress {
+  usecase "Отслеживать прогресс выполнения" as UC72
+}
+
+UC63 -> UC61 : inc. (обязательно на учебный)
+UC63 -> UC62 : inc. (обязательно возрастную)
+UC63 -> UC64 : inc.
+UC63 <. UC65 : ext. (для воркшопа, конкурса)
+UC63 <. UC66 : ext.
+UC63 <. UC67 : ext. (общедоступный, учебный)
+admin -up-> UC71
+UC71 -> UC63 : inc.
+UC71 <. UC72 : ext. (приняты, оценены преп., распределены места)
+
+@enduml
+```
+
+</details>
+
+###  Варианты использования при ведении справочников
+
+![uc support](uc_support.png)
+<details>
+<summary>Исходник в plantuml</summary>
+
+```plantuml
+@startuml
+
+left to right direction
+
+actor "СотрудникПоддержки" as support
+
+rectangle category {
+  usecase "Вести категории (добавлять и пр.)" as UC91
+}
+
+support --> UC91
+
+@enduml
+```
+
+</details>
+
+###  Варианты использования при навигации по курсам
+
+![uc course navigate](uc_course_navigate.png)
+<details>
+<summary>Исходник в plantuml</summary>
+
+```plantuml
+@startuml
+
+left to right direction
+
+actor "Гость" as guest
+actor "Студент" as student
+actor "Преподаватель" as teacher
+actor "Администратор" as admin
+
+rectangle browse {
+  usecase "Смотреть список курсов по категориям" as UC21
+}
+
+rectangle learning {
+  usecase "Смотреть список курсов, куда записан" as UC31
+}
+
+rectangle review {
+  usecase "Смотреть список курсов, куда назначен" as UC32
+}
+
+rectangle course {
+  usecase "Смотреть список курсов по статусу" as UC71
+}
+
+rectangle navigator {
+  usecase "Смотреть список курсов" as UC81
+  usecase "Искать курс по названию, категории и пр." as UC82
+  usecase "Перемещаться по структуре курса, по порядку уроков" as UC83
+  note "Здесь курс - любой элемент обр. программы" as N81
+}
+
+guest --> UC21
+student --> UC31
+teacher --> UC32
+admin --> UC71
+UC21 --|> UC81
+UC31 --|> UC81
+UC32 --|> UC81
+UC71 --|> UC81
+UC81 <. UC82 : ext.
+UC81 <. UC83 : ext.
+
+@enduml
+```
+
 </details>
 
 ### Функциональные требования (ФТ)
