@@ -256,9 +256,6 @@ rectangle course {
   usecase "Открыть \ закрыть курс" as UC66
   usecase "Определить доступность" as UC67
   note "Здесь курс - любой элемент обр. программы" as N61
-}
-
-rectangle progress {
   usecase "Отслеживать прогресс выполнения" as UC72
 }
 
