@@ -30,6 +30,8 @@ Proposed
 1. предоставления API управления файлами (загрузка/удаление/листинг)
 2. организация дистрибьюции файлов через CDN по модели push.
 
+FileManager будет использовать БД для хранения заданий асинхронной выгрузки в CDN (по модели push).
+
 Схема решения в виде диаграммы контейнеров:
 
 ![content storage schema](content_storage_l2.png)
@@ -52,6 +54,7 @@ System_Boundary(sys, "Система Поколение-М") {
     Container(adminwebapp, "Панель Управления", "JavaScript, ReactJS, SPA", "Веб-интерфейс управления контентом образовательной платформы для персонала")
     Container(gw, "API Gateway", "Java, SpringBoot/Cloud", "Аутентифицирует и хранит профиль пользователей; Марштутизирует запросы в нижележащие сервисы")
     Container(fm, "FileManager", "Java, SpringBoot", "Предоставляет API для создания/управления файлами пользователей и учебными материалами")
+    ContainerDb(dbms, "Реляционная СУБД", "PostgreSQL", "Хранит информацию загрузках и тп")
     ContainerDb(s3private, "Объектное хранилище [Приватный бакет]", "S3-Compatible Object Storage (MTSCloud S3)", "Хранит файловый контент домашних заданий")
     ContainerDb(s3public, "Объектное хранилище [Публичный бакет]", "S3-Compatible Object Storage (MTSCloud S3)", "Хранит файловый контент учебных материалов")
 }
@@ -66,6 +69,7 @@ Rel(adminwebapp, gw, "Использует API", "http/rest")
 
 Rel(gw, fm, "Вызывает API", "http/rest")
 
+Rel(fm, dbms, "Сохраняет задание выгрузки в CDN", "tcp/jdbc")
 Rel(fm, s3private, "Управляет файлами домашних заданий", "http")
 Rel(fm, s3public, "Управляет файлами учебных материалов", "http")
 Rel(fm, mtscloudcdn, "Экспортирует видео-файл, получает ссылку на него в", "http")
