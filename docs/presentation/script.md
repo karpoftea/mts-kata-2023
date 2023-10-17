@@ -1,3 +1,6 @@
+- [slide 1: Презентация команды](#slide-1-презентация-команды)
+- [slide 2: Бизнес-кейс](#slide-2-бизнес-кейс)
+
 # slide 1: Презентация команды
 - Илья Карпов
 - cupoftea
@@ -134,7 +137,7 @@
 Мы решили разделить UI на Веб-приложение Образовательной Платформы и Веб-приложение Панели Управления. 
 Оба приложения используют API Gateway для работы с бэкэндом.
 
-![web app separation](../adr/web_app_separation.png)
+![web app separation](web_app_separation.png)
 
 # slide 12: Компоненты приложения: Управление курсами и проверкой знаний
 Мы выделили в сервис Управления курсами (Course Manager) функционал платформы:
@@ -170,7 +173,7 @@
 3. Обеспечивает изоляцию доступа к данным домашних заданий студентов
 4. Обеспечивает интеграцию с CDN по модели push
 
-![content storage l2](../adr/content_storage_l2.png)
+![content storage l2](content_storage_l2.png)
 
 # slide 15: Компоненты приложения: Migration Tool
 Для обеспечения миграции данных мы предусмотрели Migration Tool:
@@ -195,7 +198,7 @@
 
 # slide 16: Диаграмма контейнеров
 
-![containers](../c4/containers.png)
+![containers](containers.png)
 
 # slide 17: Диаграмма контекстов
 
